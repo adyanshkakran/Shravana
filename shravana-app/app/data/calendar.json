@@ -4,19 +4,25 @@
       "date": "2024-03-05",
       "event": "Medical Checkup",
       "time": "6:00 PM",
-      "location": "Care Hospital"
+      "location": "Care Hospital",
+      "type": "Medical",
+      "frequency": null
     },
     {
-      "date": "2017-01-02",
-      "event": "Dinner with Friends",
-      "time": "8:00 PM",
-      "location": "Taj Hotel"
-    },
-    {
-      "date": "2017-01-03",
-      "event": "Meeting with Client",
+      "date": "2024-03-22",
+      "event": "Delivery of Rations",
       "time": "10:00 AM",
-      "location": "Starbucks"
+      "location": "Home",
+      "type": "Delivery",
+      "frequency": null
+    },
+    {
+      "date": "2024-03-4",
+      "event": "House Cleaning",
+      "time": "6:00 AM",
+      "location": "Care Hospital",
+      "type": "Maintainence",
+      "frequency": "weekly"
     }
   ]
 }
