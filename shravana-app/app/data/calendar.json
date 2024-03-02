@@ -1,0 +1,22 @@
+{
+  "events": [
+    {
+      "date": "2024-03-05",
+      "event": "Medical Checkup",
+      "time": "6:00 PM",
+      "location": "Care Hospital"
+    },
+    {
+      "date": "2017-01-02",
+      "event": "Dinner with Friends",
+      "time": "8:00 PM",
+      "location": "Taj Hotel"
+    },
+    {
+      "date": "2017-01-03",
+      "event": "Meeting with Client",
+      "time": "10:00 AM",
+      "location": "Starbucks"
+    }
+  ]
+}

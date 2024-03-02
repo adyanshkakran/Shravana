@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Alert, Modal, Button } from 'react-native';
+import { StyleSheet, Alert, Modal, Button, useColorScheme } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 
 import EditScreenInfo from '@/components/EditScreenInfo';
@@ -29,7 +29,6 @@ export default function HomePage() {
     <View style={styles.container}>
       <Text style={styles.title}>Your Loved Ones' Calendar</Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/index.tsx" />
       <Calendar
         markingType={'multi-dot'}
         onDayPress={onDayPress}
@@ -66,11 +65,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
   },
   title: {
     fontSize: 20,
     fontWeight: 'bold',
+    marginTop: 20,
   },
   separator: {
     marginVertical: 30,
