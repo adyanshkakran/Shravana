@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Alert, Modal, Button, useColorScheme } from 'react-native';
+import { StyleSheet, Modal, Button, } from 'react-native';
 import { Calendar } from 'react-native-calendars';
-
-import EditScreenInfo from '@/components/EditScreenInfo';
+import calendarData from "../data/calendar.ts";
 import { Text, View } from '@/components/Themed';
 
 const med = { key: 'med', color: '#329da8', selectedDotColor: '#329da8' };
@@ -13,16 +12,47 @@ export default function HomePage() {
   const [selected, setSelected] = useState('');
   const [markedDates, setMarkedDates] = useState({});
   const [modalVisible, setModalVisible] = useState(false);
+  const [events, setEvents] = useState([]);
+
 
   const onDayPress = (day: any) => {
     setSelected(day.dateString);
+    const eventsForDay = calendarData.events.filter(event => {
+      if (event.date === day.dateString) {
+        return true;
+      }
+      if (event.frequency === 'weekly') {
+        const eventDate = new Date(event.date);
+        const selectedDate = new Date(day.dateString);
+        const diffInDays = Math.floor((selectedDate.getTime() - eventDate.getTime()) / (1000 * 60 * 60 * 24));
+        return diffInDays % 7 === 0;
+      }
+      return false;
+    });
+    setEvents(eventsForDay);
     setModalVisible(true);
   };
 
   useEffect(() => {
-    setMarkedDates({
-      [selected]: { selected: true, disableTouchEvent: true, selectedDotColor: 'orange' }
+    const newMarkedDates = {};
+    calendarData.events.forEach((item) => {
+      const dots = [];
+      if (item.type == 'med') dots.push(med);
+      if (item.type == 'delivery') dots.push(delivery);
+      if (item.type == 'cleaning') dots.push(cleaning);
+      newMarkedDates[item.date] = { dots, selected: item.date === selected };
+
+      // If the event has a weekly frequency, add a dot every 7 days
+      if (item.frequency == 'weekly') {
+        let date = new Date(item.date);
+        for (let i = 0; i < 54; i++) { // for 4 weeks
+          date.setDate(date.getDate() + 7);
+          const dateString = date.toISOString().split('T')[0];
+          newMarkedDates[dateString] = { dots, selected: dateString === selected };
+        }
+      }
     });
+    setMarkedDates(newMarkedDates);
   }, [selected]);
 
   return (
@@ -39,7 +69,6 @@ export default function HomePage() {
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
           setModalVisible(!modalVisible);
         }}
       >
@@ -47,9 +76,13 @@ export default function HomePage() {
           <View style={styles.modalView}>
             <Text style={styles.modalText}>{new Date(selected).toLocaleDateString('en-GB', { weekday: 'long' })}, {new Date(selected).toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' })}</Text>
             <Text style={[styles.modalText, { backgroundColor: 'white', padding: 10, width: '100%' }]}>Your Events of the Day</Text>
-            <Text style={[styles.modalText, { backgroundColor: '#329da8', padding: 10, width: '100%' }]}>Medical Check-up</Text>
-            <Text style={[styles.modalText, { backgroundColor: '#ed6039', padding: 10, width: '100%' }]}>Delivery Expected!</Text>
-            <Text style={[styles.modalText, { backgroundColor: '#c2b60e', padding: 10, width: '100%' }]}>Home Cleaning</Text>
+            {events.length > 0 ? (
+              events.map(event => (
+                <Text key={event.id} style={[styles.modalText, { backgroundColor: event.type === 'med' ? '#329da8' : event.type === 'delivery' ? '#ed6039' : '#c2b60e', padding: 10, width: '100%' }]}>{event.event}</Text>
+              ))
+            ) : (
+              <Text style={styles.modalText}>No events</Text>
+            )}
             <Button
               title="Close"
               onPress={() => setModalVisible(!modalVisible)}
