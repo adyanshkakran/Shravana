@@ -14,7 +14,7 @@ export default function HomePage() {
   const [markedDates, setMarkedDates] = useState({});
   const [modalVisible, setModalVisible] = useState(false);
 
-  const onDayPress = (day) => {
+  const onDayPress = (day: any) => {
     setSelected(day.dateString);
     setModalVisible(true);
   };
