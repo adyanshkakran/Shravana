@@ -12,7 +12,7 @@ let calendar = {
     {
       "id": 2,
       "date": "2024-03-22",
-      "event": "Delivery of Rations",
+      "event": "Oranges",
       "time": "10:00 AM",
       "location": "Home",
       "type": "delivery",
@@ -23,7 +23,7 @@ let calendar = {
       "date": "2024-03-04",
       "event": "House Cleaning",
       "time": "6:00 AM",
-      "location": "Care Hospital",
+      "location": "Home",
       "type": "cleaning",
       "frequency": "weekly"
     },
@@ -39,7 +39,7 @@ let calendar = {
     {
       "id": 5,
       "date": "2024-03-03",
-      "event": "Someone's Birthday",
+      "event": "Physiotherapy",
       "time": "8:00 AM",
       "location": "Parijaaat D Block",
       "type": "med",

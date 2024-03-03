@@ -1,137 +1,3 @@
-// // Just like Delivery.tsx, make this page too, but with "HealthCare" as the title and "This is a dummy health care screen.
-
-// // Path: shravana-app/app/services/HealthCare.tsx
-
-// import { StyleSheet } from 'react-native';
-
-// import EditScreenInfo from '@/components/EditScreenInfo';
-// import { Text, View } from '@/components/Themed';
-
-// const HealthCareScreen = () => {
-//     return (
-//       <View style={styles.container}>
-//         <Text style={styles.title}>HealthCare Screen</Text>
-//         <Text>This is a dummy health care screen.</Text>
-//       </View>
-//     );
-//   }
-
-// const styles = StyleSheet.create({
-//     container: {
-//         flex: 1,
-//         alignItems: 'center',
-//         justifyContent: 'center',
-//     },
-//     title: {
-//         fontSize: 20,
-//         fontWeight: 'bold',
-//         marginBottom: 16,
-//     },
-// });
-
-// export default HealthCareScreen;
-
-
-// import React, { useState } from 'react';
-// import { StyleSheet, TextInput, Button, View, Alert, Platform } from 'react-native';
-// import DatePicker from '@react-native-community/datetimepicker';
-
-// const HealthCareScreen = () => {
-//   const [date, setDate] = useState(new Date());
-//   const [doctor, setDoctor] = useState('');
-//   const [isRecurring, setIsRecurring] = useState(false);
-//   const [recurringFrequency, setRecurringFrequency] = useState('');
-//   const [notes, setNotes] = useState('');
-//   const [showDatePicker, setShowDatePicker] = useState(false);
-
-//   const handleDateChange = (event, selectedDate) => {
-//     const currentDate = selectedDate || date;
-//     setShowDatePicker(Platform.OS === 'ios');
-//     setDate(currentDate);
-//   };
-
-//   const handleBookAppointment = () => {
-//     // Perform actions to book appointment here
-//     // For now, let's just display an alert with the entered data
-//     const message = `Appointment booked with ${doctor} on ${date.toDateString()}${isRecurring ? ` (Recurring every ${recurringFrequency})` : ''}. Additional notes: ${notes}`;
-//     Alert.alert('Appointment Booked!', message);
-//     console.log('Appointment Booked!', message);
-//   };
-
-//   return (
-//     <View style={styles.container}>
-//       <TextInput
-//         style={styles.input}
-//         onChangeText={setDoctor}
-//         value={doctor}
-//         placeholder="Doctor's Name"
-//       />
-//       <View style={styles.datePickerContainer}>
-//         <Button title="Select Date" onPress={() => setShowDatePicker(true)} />
-//         {showDatePicker && (
-//           <DatePicker
-//             value={date}
-//             mode="date"
-//             onChange={handleDateChange}
-//           />
-//         )}
-//       </View>
-//       <View style={styles.checkboxContainer}>
-//         <Button
-//           title="Recurring Appointment"
-//           onPress={() => setIsRecurring(!isRecurring)}
-//           color={isRecurring ? 'green' : 'gray'}
-//         />
-//       </View>
-//       {isRecurring && (
-//         <TextInput
-//           style={styles.input}
-//           onChangeText={setRecurringFrequency}
-//           value={recurringFrequency}
-//           placeholder="Recurring Frequency (e.g., Weekly, Monthly)"
-//         />
-//       )}
-//       <TextInput
-//         style={styles.input}
-//         onChangeText={setNotes}
-//         value={notes}
-//         placeholder="Additional Notes"
-//       />
-//       <Button title="Book Appointment" onPress={handleBookAppointment} />
-//     </View>
-//   );
-// };
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//     padding: 20,
-//   },
-//   input: {
-//     height: 40,
-//     width: '100%',
-//     borderColor: 'gray',
-//     borderWidth: 1,
-//     marginBottom: 20,
-//     paddingHorizontal: 10,
-//   },
-//   datePickerContainer: {
-//     flexDirection: 'row',
-//     alignItems: 'center',
-//     marginBottom: 20,
-//   },
-//   checkboxContainer: {
-//     flexDirection: 'row',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//     marginBottom: 20,
-//   },
-// });
-
-// export default HealthCareScreen;
-
 import React, { useState } from 'react';
 import { StyleSheet, TextInput, Button, View, Alert, Modal, Text, TouchableWithoutFeedback, ScrollView } from 'react-native';
 
@@ -142,6 +8,7 @@ const HealthCareScreen = () => {
   const [doctorType, setDoctorType] = useState('');
   const [recurringFrequency, setRecurringFrequency] = useState('');
   const [notes, setNotes] = useState('');
+  const [ModalVisible, setModalVisible] = useState(false)
 
   const doctorTypes = ['General Surgeon', 'Psychologist', 'Dentist', 'Pulmonologist']; // Add more doctor types as needed
   const recurringFrequencies = ['None','Weekly', 'Biweekly', 'Monthly']; // Add more recurring frequencies as needed
@@ -150,9 +17,16 @@ const HealthCareScreen = () => {
     // Perform actions to book appointment here
     // For now, let's just display an alert with the entered data
     const message = `Appointment booked with ${doctorType} ${recurringFrequency ? `(Recurring every ${recurringFrequency})` : ''}. Additional notes: ${notes}`;
-    Alert.alert('Appointment Booked!', message);
-    console.log('Appointment Booked!', message);
+    setModalVisible(true);
   };
+
+  const onModalClose = () => {
+    setModalVisible(false);
+    setDoctorType('');
+    setDate('');
+    setRecurringFrequency('');
+    setNotes('');
+  }
 
   return (
     <View style={styles.container}>
@@ -219,6 +93,16 @@ const HealthCareScreen = () => {
           </View>
         </View>
       </Modal>
+
+      <Modal
+        visible={ModalVisible}
+        onDismiss={() => setModalVisible(false)}
+      >
+        <View style={styles.modalView}>
+          <Text>Appointment booked with {doctorType} {recurringFrequency ? `(Recurring ${recurringFrequency})` : ''}!</Text>
+          <Button title="Close" onPress={onModalClose} />
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -259,6 +143,14 @@ const styles = StyleSheet.create({
     padding: 10,
     borderBottomWidth: 1,
     borderBottomColor: '#ddd',
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    paddingVertical: 100
   },
 });
 

@@ -1,4 +1,4 @@
-import { Platform, StyleSheet, useColorScheme } from 'react-native';
+import { Platform, StyleSheet, useColorScheme, Image } from 'react-native';
 
 import { Text, View } from '@/components/Themed';
 import { Ionicons } from '@expo/vector-icons';
@@ -9,7 +9,7 @@ export default function Header() {
 
   return (
     <View style={styles.container}>
-      <Text style = {styles.text}>Shravana</Text>
+      <Image source={require("../images/logo.jpeg")} style={styles.smallImage} />
       <View style={styles.right}>
         <Link href='/Wallet' style={styles.money} >
           <Text>₹82</Text>
@@ -42,5 +42,9 @@ const styles = StyleSheet.create({
     marginRight: 10,
     fontSize: 20,
     color: 'green',
+  },
+  smallImage: {
+    width: 150,
+    height: 50,    
   }
 });
