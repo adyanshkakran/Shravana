@@ -35,6 +35,15 @@ let calendar = {
       "location": "Old Boys Hostel",
       "type": "delivery",
       "frequency": null,
+    },
+    {
+      "id": 5,
+      "date": "2024-03-03",
+      "event": "Someone's Birthday",
+      "time": "8:00 AM",
+      "location": "Parijaaat D Block",
+      "type": "med",
+      "frequency": null,
     }
   ]
 }

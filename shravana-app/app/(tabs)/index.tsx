@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Modal, Button, } from 'react-native';
+import { StyleSheet, Modal, Button, Dimensions } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import calendarData from "../data/calendar.ts";
 import { Text, View } from '@/components/Themed';
@@ -8,12 +8,26 @@ const med = { key: 'med', color: '#329da8', selectedDotColor: '#329da8' };
 const delivery = { key: 'delivery', color: '#ed6039', selectedDotColor: '#ed6039' };
 const cleaning = { key: 'cleaning', color: '#c2b60e', selectedDotColor: '#c2b60e' };
 
+const screenHeight = Dimensions.get('window').height;
+
 export default function HomePage() {
   const [selected, setSelected] = useState('');
   const [markedDates, setMarkedDates] = useState({});
   const [modalVisible, setModalVisible] = useState(false);
   const [events, setEvents] = useState([]);
+  const today = new Date().toISOString().split('T')[0];
 
+  const todayEvents = calendarData.events.filter(event => {
+    if (event.date === today) {
+      return true;
+    }
+    if (event.frequency === 'weekly') {
+      const eventDate = new Date(event.date);
+      const diffInDays = Math.floor((new Date(today).getTime() - eventDate.getTime()) / (1000 * 60 * 60 * 24));
+      return diffInDays % 7 === 0;
+    }
+    return false;
+  });
 
   const onDayPress = (day: any) => {
     setSelected(day.dateString);
@@ -64,6 +78,17 @@ export default function HomePage() {
         onDayPress={onDayPress}
         markedDates={markedDates}
       />
+      <View style={[styles.table, { marginTop: screenHeight * 0.05 }]}>
+        <Text style={styles.tableCell}>{new Date().toLocaleDateString('en-GB', { weekday: 'long' })}, {new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' })}</Text>
+        <Text style={[styles.modalText, { backgroundColor: 'white', padding: 10, width: '100%' }]}>Today's Events</Text>
+        {todayEvents.length > 0 ? (
+          todayEvents.map(event => (
+            <Text key={event.id} style={[styles.modalText, { backgroundColor: event.type === 'med' ? '#329da8' : event.type === 'delivery' ? '#ed6039' : '#c2b60e', padding: 10, width: '100%' }]}>{event.event}</Text>
+          ))
+        ) : (
+          <Text style={styles.modalText}>No events</Text>
+        )}
+      </View>
       <Modal
         animationType="slide"
         transparent={true}
