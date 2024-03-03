@@ -30,10 +30,19 @@ let calendar = {
     {
       "id": 4,
       "date": "2024-03-01",
-      "event": "Mayush Birthday",
+      "event": "Delivery for Mayush",
       "time": "2:00 AM",
       "location": "Old Boys Hostel",
-      "type": "delivery",
+      "type": "retail",
+      "frequency": null,
+    },
+    {
+      "id": 5,
+      "date": "2024-03-03",
+      "event": "Someone's Birthday",
+      "time": "8:00 AM",
+      "location": "Parijaaat D Block",
+      "type": "med",
       "frequency": null,
     }
   ]
