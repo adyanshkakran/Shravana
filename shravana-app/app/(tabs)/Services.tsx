@@ -8,14 +8,18 @@ export default function Services() {
     <View style={styles.container}>
       <Text style={styles.title}>Services</Text>
       <View style={styles.gridContainer}>
-        <TouchableOpacity style={styles.button}>
-          <Image source={require('../../images/healthcare.webp')} style={styles.smallImage} />
-          <Text style={styles.buttonText}>Healthcare</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button}>
+        <Link href='/services/HealthCare'>
+          <TouchableOpacity style={styles.button}>
+            <Image source={require('../../images/healthcare.webp')} style={styles.smallImage} />
+            <Text style={styles.buttonText}>Healthcare</Text>
+          </TouchableOpacity>
+        </Link>
+        <Link href='/services/Retail'>
+          <TouchableOpacity style={styles.button}>
           <Image source={require('../../images/retail.png')} style={styles.smallImage} />
           <Text style={styles.buttonText}>Retail Shopping</Text>
-        </TouchableOpacity>
+          </TouchableOpacity>
+        </Link>
       </View>
       <View style={styles.gridContainer}>
         <Link href='/services/Delivery'>
@@ -24,10 +28,12 @@ export default function Services() {
             <Text style={styles.buttonText}>Delivery/Pickup</Text>
           </TouchableOpacity>
         </Link>
-        <TouchableOpacity style={styles.button}>
-          <Image source={require('../../images/homem.png')} style={styles.smallImage} />
-          <Text style={styles.buttonText}>Home Maintenance</Text>
-        </TouchableOpacity>
+        <Link href='/services/home'>
+          <TouchableOpacity style={styles.button}>
+            <Image source={require('../../images/homem.png')} style={styles.smallImage} />
+            <Text style={styles.buttonText}>Home Maintenance</Text>
+          </TouchableOpacity>
+        </Link>
       </View>
     </View>
   );
