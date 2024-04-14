@@ -9,8 +9,6 @@ import { useClientOnlyValue } from '@/components/useClientOnlyValue';
 import TabBarIcon from '@/components/TabBarIcon';
 import { FontAwesome5 } from '@expo/vector-icons';
 
-// You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
-
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -44,6 +42,14 @@ export default function TabLayout() {
         options={{
           title: 'Wallet',
           tabBarIcon: ({ color }) => <FontAwesome5 name="wallet" size={24} color={color} />,
+          headerShown: false,
+        }}
+      />
+      <Tabs.Screen
+        name="Calendar"
+        options={{
+          title: 'Calendar',
+          tabBarIcon: ({ color }) => <FontAwesome5 name="calendar" size={24} color={color} />,
           headerShown: false,
         }}
       />
