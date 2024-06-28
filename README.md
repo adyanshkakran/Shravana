@@ -1,1 +1,1 @@
-To run the whatsapp bot, extract the zip and follow the instructions in that README.md file
+Follow instructions in respective README files to run whatsapp bot and app web service.
