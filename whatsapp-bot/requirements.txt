@@ -1,0 +1,10 @@
+flask
+python-dotenv
+openai
+requests
+aiohttp
+speechrecognition
+db-sqlite3
+click
+pydub
+backoff
